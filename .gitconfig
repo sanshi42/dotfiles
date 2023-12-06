@@ -3,3 +3,9 @@
 	name = sanshi
 [core]
 	editor = vim
+[alias]
+	co = checkout
+        br = branch
+        ci = commit
+        st = status
+	graph = log --all --graph --decorate --oneline
