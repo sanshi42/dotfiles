@@ -123,3 +123,5 @@ alias gs='git status'
 #PS1="\[\]\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ \[\]"
 # 自定义的PS1
 PS1="\[\e[35;1m\][\u@\h \W]$>\[\e[0m\]"
+# 默认使用Pyhon3
+alias python='python3'

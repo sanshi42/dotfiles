@@ -78,3 +78,8 @@ inoremap <Left>  <ESC>:echoe "Use h"<CR>
 inoremap <Right> <ESC>:echoe "Use l"<CR>
 inoremap <Up>    <ESC>:echoe "Use k"<CR>
 inoremap <Down>  <ESC>:echoe "Use j"<CR>
+" use 4 spaces instead of tabs during formatting
+set expandtab
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
