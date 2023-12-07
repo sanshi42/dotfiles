@@ -125,3 +125,5 @@ alias gs='git status'
 PS1="\[\e[35;1m\][\u@\h \W]$>\[\e[0m\]"
 # 默认使用Pyhon3
 alias python='python3'
+# 尝试设置Shell为Vim模式
+export EDITOR=vim
