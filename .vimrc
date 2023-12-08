@@ -84,3 +84,7 @@ set tabstop=4
 set softtabstop=4
 set shiftwidth=4
 " 安装code linting 插件ale
+" 设置自动缩进
+set autoindent
+" 设置显示tab键，由于之前将tab键换成了4个空格，因此这里要输入则需要输入CTRL+v,<tab>
+set listchars=tab:>-
