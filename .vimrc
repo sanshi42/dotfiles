@@ -10,10 +10,13 @@
 " loaded some other way (e.g. saved as `foo`, and then Vim started with
 " `vim -u foo`).
 set nocompatible
-
+" 打开文件类型检测，为特定的文件类型允许插件文件的载入和载入缩进文件
+filetype plugin indent on
 " Turn on syntax highlighting.
 syntax on
-
+set display=lastline " 显示窗口末行尽量多的内容 
+set showmode  " 在命令行显示当前的mode，默认就是开启的
+set showcmd  " 在最后一行显示命令 
 " Disable the default Vim startup message.
 set shortmess+=I
 
@@ -51,7 +54,21 @@ set ignorecase
 set smartcase
 
 " Enable searching as you type, rather than waiting till you press enter.
-set incsearch
+set incsearch  " 搜索时高亮
+set hlsearch  " 高亮最近的匹配搜索模式
+
+set ttyfast  " 指示一个快速的终端连接
+set lazyredraw  " 仅仅必要的时候才重画 
+
+set splitbelow  " 在当前窗口下打开新的窗口
+set splitright  " 在当前窗口右打开新的窗口
+
+set cursorline  " 高亮光标所在屏幕行
+set wrapscan  " 搜索在文件尾折回文件头
+
+set report=0  " 总是报告行改变（行数下限为0）
+
+set list  " 显示<Tab>和<EOL>
 
 " Unbind some useless/annoying default key bindings.
 nmap Q <Nop> " 'Q' in normal mode enters Ex mode. You almost never want this.
@@ -83,8 +100,13 @@ set expandtab
 set tabstop=4
 set softtabstop=4
 set shiftwidth=4
+set shiftround  " 缩进取整到shiftwidth的倍数
 " 安装code linting 插件ale
 " 设置自动缩进
 set autoindent
 " 设置显示tab键，由于之前将tab键换成了4个空格，因此这里要输入则需要输入CTRL+v,<tab>
 set listchars=tab:>-
+set updatecount=100  " 输入这么多个字符以后，把交换文件吸入磁盘。缺省为200，改为100
+
+set undofile  " 把撤销信息写入一个文件里
+set undodir=$HOME/.vim/files/undo//  " 撤销文件使用的目录名列表
