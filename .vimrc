@@ -10,6 +10,8 @@
 " loaded some other way (e.g. saved as `foo`, and then Vim started with
 " `vim -u foo`).
 set nocompatible
+" 设置帮助文档的语言为中文
+set helplang=cn
 " 打开文件类型检测，为特定的文件类型允许插件文件的载入和载入缩进文件
 filetype plugin indent on
 " Turn on syntax highlighting.
@@ -63,7 +65,8 @@ set lazyredraw  " 仅仅必要的时候才重画
 set splitbelow  " 在当前窗口下打开新的窗口
 set splitright  " 在当前窗口右打开新的窗口
 
-set cursorline  " 高亮光标所在屏幕行
+" set cursorline  "
+" 高亮光标所在屏幕行（已弃用，后面设置了更加智能的，在插入模式中不要高亮）
 set wrapscan  " 搜索在文件尾折回文件头
 
 set report=0  " 总是报告行改变（行数下限为0）
@@ -106,7 +109,74 @@ set shiftround  " 缩进取整到shiftwidth的倍数
 set autoindent
 " 设置显示tab键，由于之前将tab键换成了4个空格，因此这里要输入则需要输入CTRL+v,<tab>
 set listchars=tab:>-
-set updatecount=100  " 输入这么多个字符以后，把交换文件吸入磁盘。缺省为200，改为100
 
-set undofile  " 把撤销信息写入一个文件里
-set undodir=$HOME/.vim/files/undo//  " 撤销文件使用的目录名列表
+" 打开文件时恢复光标位置
+autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+" 临时文件管理设置（此时如果多个人修改同一个文件时，将不会警告）
+" 如果文件夹不存在，则新建文件夹
+if !isdirectory($HOME.'/.vim/files') && exists('*mkdir')
+  call mkdir($HOME.'/.vim/files')
+endif
+
+" 备份文件
+" set backup
+" set backupdir   =$HOME/.vim/files/backup/
+" set backupext   =-vimbackup
+" set backupskip  =
+" 交换文件
+" set directory   =$HOME/.vim/files/swap//
+" set updatecount =100
+" " 撤销文件
+" set undofile
+" set undodir     =$HOME/.vim/files/undo/
+" viminfo 文件
+set viminfo     ='100,n$HOME/.vim/files/info/viminfo
+" 启用内置的matchit插件
+packadd! matchit
+" 智能Ctrl-l：执行重新绘制
+nnoremap <leader>l :nohlsearch<cr>:diffupdate<cr>:syntax sync fromstart<cr><c-l>
+" 禁用错误报警声音和图标
+set noerrorbells
+set novisualbell
+set t_vb=
+" 快速移动当前行
+nnoremap [e  :<c-u>execute 'move -1-'. v:count1<cr>
+nnoremap ]e  :<c-u>execute 'move +'. v:count1<cr>
+" 快速添加空行
+nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
+nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
+" 快速编辑（更改拼写错误）自定义宏
+nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+" 在GUI中快速改变字体大小
+command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
+command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
+" 根据模式改变光标类型（当前环境不一定有用，tmux中应该能用）
+if empty($TMUX)
+  let &t_SI = "\<Esc>]50;CursorShape=1\x7"
+  let &t_EI = "\<Esc>]50;CursorShape=0\x7"
+  let &t_SR = "\<Esc>]50;CursorShape=2\x7"
+else
+  let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+  let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+  let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+endif
+" 防止水平滑动的时候失去选择
+xnoremap <  <gv
+xnoremap >  >gv
+" 选择当前行至结尾，排除换行符（给g_设置一个快捷键L）
+nnoremap L g_
+" 重新载入保存文件
+autocmd BufWritePost $MYVIMRC source $MYVIMRC
+autocmd BufWritePost ~/.Xdefaults call system('xrdb ~/.Xdefaults')
+" 更加智能的当前行高亮
+autocmd InsertLeave,WinEnter * set cursorline
+autocmd InsertEnter,WinLeave * set nocursorline
+" 更快的关键字补全
+set complete-=i   " disable scanning included files
+set complete-=t   " disable searching tags
+" 改变颜色主题的默认外观
+autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
