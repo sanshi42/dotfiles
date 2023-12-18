@@ -8,4 +8,8 @@
     br = branch
     ci = commit
     st = status
-	graph = log --all --graph --decorate --oneline
+    graph = log --all --graph --decorate --oneline
+[pull]
+	rebase = true
+[rerere]
+	enabled = true
