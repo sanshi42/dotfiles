@@ -3,6 +3,7 @@
 	name = sanshi
 [core]
 	editor = vim
+    quotepath = false
 [alias]
 	co = checkout
     br = branch

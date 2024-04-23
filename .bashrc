@@ -127,3 +127,5 @@ PS1="\[\e[35;1m\][\u@\h \W]$>\[\e[0m\]"
 alias python='python3'
 # 尝试设置Shell为Vim模式
 export EDITOR=vim
+# 添加miniconda的路径
+export PATH=$PATH:/home/huanglei/miniconda3/bin

@@ -118,9 +118,9 @@ autocmd BufReadPost *
 
 " 临时文件管理设置（此时如果多个人修改同一个文件时，将不会警告）
 " 如果文件夹不存在，则新建文件夹
-if !isdirectory($HOME.'/.vim/files') && exists('*mkdir')
-  call mkdir($HOME.'/.vim/files')
-endif
+"if !isdirectory($HOME.'/.vim/files') && exists('*mkdir')
+"  call mkdir($HOME.'/.vim/files')
+"endif
 
 " 备份文件
 " set backup
