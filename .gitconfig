@@ -10,6 +10,7 @@
     ci = commit
     st = status
     graph = log --all --graph --decorate --oneline
+	unstage = reset HEAD --
 [pull]
 	rebase = true
 [rerere]
