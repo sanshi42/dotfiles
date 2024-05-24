@@ -25,6 +25,8 @@ set shortmess+=I
 " Show line numbers.
 set number
 
+" 修改全局变量，设置快捷键前缀<leader>从默认的\改为空格，此时<localleader>仍然为\
+let g:mapleader = ' '
 " This enables relative line numbering mode. With both number and
 " relativenumber enabled, the current line shows the true line number, while
 " all other lines (above and below) are numbered relative to the current line.
