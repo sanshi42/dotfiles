@@ -119,6 +119,8 @@ fi
 alias cman='man -M /usr/share/man/zh_CN'
 # 方便使用git命令
 alias gs='git status'
+# 方便使用清理
+alias clr='clear'
 # 默认的PS1
 #PS1="\[\]\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ \[\]"
 # 自定义的PS1
@@ -129,3 +131,23 @@ alias python='python3'
 export EDITOR=vim
 # 添加miniconda的路径
 export PATH=$PATH:/home/huanglei/miniconda3/bin
+source <(kubectl completion bash)
+source /usr/share/bash-completion/bash_completion
+
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('/home/huanglei/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+    if [ -f "/home/huanglei/miniconda3/etc/profile.d/conda.sh" ]; then
+        . "/home/huanglei/miniconda3/etc/profile.d/conda.sh"
+    else
+        export PATH="/home/huanglei/miniconda3/bin:$PATH"
+    fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

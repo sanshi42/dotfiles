@@ -182,3 +182,5 @@ set complete-=i   " disable scanning included files
 set complete-=t   " disable searching tags
 " 改变颜色主题的默认外观
 autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
+" 显示最后一行的状态
+set ruler
