@@ -91,15 +91,15 @@ set mouse+=a
 " bad habit. The former is enforceable through a .vimrc, while we don't know
 " how to prevent the latter.
 " Do this in normal mode...
-nnoremap <Left>  :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up>    :echoe "Use k"<CR>
-nnoremap <Down>  :echoe "Use j"<CR>
+" nnoremap <Left>  :echoe "Use h"<CR>
+" nnoremap <Right> :echoe "Use l"<CR>
+" nnoremap <Up>    :echoe "Use k"<CR>
+" nnoremap <Down>  :echoe "Use j"<CR>
 " ...and in insert mode
-inoremap <Left>  <ESC>:echoe "Use h"<CR>
-inoremap <Right> <ESC>:echoe "Use l"<CR>
-inoremap <Up>    <ESC>:echoe "Use k"<CR>
-inoremap <Down>  <ESC>:echoe "Use j"<CR>
+" inoremap <Left>  <ESC>:echoe "Use h"<CR>
+" inoremap <Right> <ESC>:echoe "Use l"<CR>
+" inoremap <Up>    <ESC>:echoe "Use k"<CR>
+" inoremap <Down>  <ESC>:echoe "Use j"<CR>
 " use 4 spaces instead of tabs during formatting
 set expandtab
 set tabstop=4
@@ -153,6 +153,10 @@ nnoremap [<space>  :<c-u>put! =repeat(nr2char(10), v:count1)<cr>'[
 nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " 快速编辑（更改拼写错误）自定义宏
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
+" 使用 sudo 权限保存文件
+cnoremap <slient> w!! w !sudo tee % > /dev/null
+" 使用 %% 自动扩展为活动缓存区所在目录的路径
+cnoremap <expr> %% getcmdtype() == ':' ? expand('%h').'/' : '%%'
 " 在GUI中快速改变字体大小
 command! Bigger  :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)+1', '')
 command! Smaller :let &guifont = substitute(&guifont, '\d\+$', '\=submatch(0)-1', '')
@@ -184,3 +188,11 @@ set complete-=t   " disable searching tags
 autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
 " 显示最后一行的状态
 set ruler
+" 使用bash shell的方式自定义补全行为
+" set wildmode=longest,list
+" 使用zsh的方式自定义补全行为
+set wildmenu
+set wildmode=full
+" 增加10倍的命令行保存历史上限
+set history=200
+" 安装vim中文文档的vim-plug，记得重启vim后执行:PlugInstall

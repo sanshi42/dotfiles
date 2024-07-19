@@ -151,3 +151,6 @@ unset __conda_setup
 
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+# TDD学习时需要的路径
+export TDD_PROJECT_ROOT=/home/huanglei/workspace/my-test-learning/tdd-project
