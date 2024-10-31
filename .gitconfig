@@ -6,16 +6,20 @@
     quotepath = false
 [alias]
 	co = checkout
-    br = branch
-    ci = commit
-    st = status
+	br = branch
+	ci = commit
+	st = status
     graph = log --all --graph --decorate --oneline
 	unstage = reset HEAD --
+    diff = difftool
 [pull]
 	rebase = true
 [rerere]
 	enabled = true
 [merge]
 	conflictstyle = diff3
+	tool = vimdiff
 [init]
 	defaultBranch = main
+[diff]
+	tool = vimdiff

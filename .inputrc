@@ -1,7 +1,1 @@
-set editing-mode vi
-
-# Enable Ctrl+A to move to the beginning of the line
-"\C-a": beginning-of-line
-
-# Enable Ctrl+E to move to the end of the line
-"\C-e": end-of-line
+$include ~/.local/share/omakub/defaults/bash/inputrc

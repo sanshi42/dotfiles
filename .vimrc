@@ -58,7 +58,7 @@ set ignorecase
 set smartcase
 
 " Enable searching as you type, rather than waiting till you press enter.
-set incsearch  " 搜索时高亮
+set incsearch  " 根据已在查找域中输入的文本，预览第一处匹配，搜索时高亮
 set hlsearch  " 高亮最近的匹配搜索模式
 
 set ttyfast  " 指示一个快速的终端连接
@@ -175,6 +175,8 @@ xnoremap <  <gv
 xnoremap >  >gv
 " 选择当前行至结尾，排除换行符（给g_设置一个快捷键L）
 nnoremap L g_
+" ctags 的索引更新快捷键
+nnoremap <f5> :!ctags -R<CR>
 " 重新载入保存文件
 autocmd BufWritePost $MYVIMRC source $MYVIMRC
 autocmd BufWritePost ~/.Xdefaults call system('xrdb ~/.Xdefaults')
@@ -186,6 +188,8 @@ set complete-=i   " disable scanning included files
 set complete-=t   " disable searching tags
 " 改变颜色主题的默认外观
 autocmd ColorScheme * highlight StatusLine ctermbg=darkgray cterm=NONE guibg=darkgray gui=NONE
+" 配置Ruby文件的缩进和制表符设置（临时）
+autocmd FileType ruby setlocal ts=2 sts=2 sw=2 expandtab
 " 显示最后一行的状态
 set ruler
 " 使用bash shell的方式自定义补全行为
@@ -196,3 +200,34 @@ set wildmode=full
 " 增加10倍的命令行保存历史上限
 set history=200
 " 安装vim中文文档的vim-plug，记得重启vim后执行:PlugInstall
+
+" 查找当前选中文本的脚本
+xnoremap * :<C-u>call <SID>VSetSearch('/')<CR>/<C-R>=@/<CR><CR>
+xnoremap # :<C-u>call <SID>VSetSearch('?')<CR>?<C-R>=@/<CR><CR>
+function! s:VSetSearch(cmdtype)
+      let temp = @s
+        norm! gv"sy
+          let @/ = '\V' . substitute(escape(@s, a:cmdtype.'\'), '\n', '\\n', 'g')
+            let @s = temp
+endfunction
+
+" 自动化下载 plug.vim
+let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
+if empty(glob(data_dir . '/autoload/plug.vim'))
+      silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+" ###### 以下的配置来自于 ChatGPT 生成，请注意是否正确
+" vim-plug 初始化
+call plug#begin('~/.vim/plugged')
+
+" 基础插件（暂时还不了解这些工具怎么使用，所以先全部注释掉
+" Plug 'scrooloose/nerdtree'   " 文件浏览器
+" Plug 'tpope/vim-fugitive'    " Git 集成
+" Plug 'airblade/vim-gitgutter' " Git 差异显示
+" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+" Plug 'junegunn/fzf.vim'      " 模糊查找
+
+" 结束插件块
+call plug#end()
