@@ -121,6 +121,8 @@ alias cman='man -M /usr/share/man/zh_CN'
 alias gs='git status'
 # 方便使用清理
 alias clr='clear'
+# 方便使用k8s命令
+alias kk='kubectl'
 # 默认的PS1
 #PS1="\[\]\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ \[\]"
 # 自定义的PS1
@@ -149,8 +151,3 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-
-# TDD学习时需要的路径
-export TDD_PROJECT_ROOT=/home/huanglei/workspace/my-test-learning/tdd-project

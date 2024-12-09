@@ -228,6 +228,7 @@ call plug#begin('~/.vim/plugged')
 " Plug 'airblade/vim-gitgutter' " Git 差异显示
 " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 " Plug 'junegunn/fzf.vim'      " 模糊查找
+Plug 'michaeljsmith/vim-indent-object'
 
 " 结束插件块
 call plug#end()
