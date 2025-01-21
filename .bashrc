@@ -91,6 +91,7 @@ fi
 alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
+alias h='history'
 
 # Add an "alert" alias for long running commands.  Use like so:
 #   sleep 10; alert
@@ -151,3 +152,15 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
+. "$HOME/.cargo/env"
+
+# Created by `pipx` on 2025-01-10 08:25:53
+export PATH="$PATH:/home/huanglei/.local/bin"
+
+# pnpm
+export PNPM_HOME="/home/huanglei/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end

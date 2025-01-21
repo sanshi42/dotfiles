@@ -22,6 +22,9 @@ set showcmd  " 在最后一行显示命令
 " Disable the default Vim startup message.
 set shortmess+=I
 
+" 关闭自动换行
+set nowrap
+
 " Show line numbers.
 set number
 
