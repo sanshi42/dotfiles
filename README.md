@@ -26,6 +26,7 @@ DOTFILES_BACKUP_KEEP=10 ./autoconfig.sh
 - `.vimrc` / `.ideavimrc`：Vim 与 JetBrains IdeaVim 配置。
 - `.tmux.conf`：tmux prefix、pane 快捷键和状态栏样式。
 - `vscode/settings.json`：VS Code 用户设置。
+- `agents/`：Codex、Claude Code 等 Agent 相关的可重放配置。
 
 ## 注意
 

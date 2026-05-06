@@ -20,4 +20,4 @@ jobs:
           sudo apt-get install -y shellcheck
 
       - name: Run ShellCheck
-        run: shellcheck autoconfig.sh
+        run: shellcheck autoconfig.sh agents/codex/*.sh agents/git-hooks/*

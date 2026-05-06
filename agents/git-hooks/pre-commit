@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -euo pipefail
+
+repo_root="$(git rev-parse --show-toplevel)"
+sync_script="$repo_root/agents/codex/sync-skills.sh"
+skills_dir="$repo_root/agents/codex/skills"
+
+if [ ! -x "$sync_script" ]; then
+    exit 0
+fi
+
+"$sync_script"
+
+if [ -d "$skills_dir" ]; then
+    git add "$skills_dir"
+fi
