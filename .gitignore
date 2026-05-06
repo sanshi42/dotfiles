@@ -6,6 +6,8 @@ Thumbs.db
 *.swo
 
 # Local/private overrides
+.bash_local
+.bash_secrets
 .env
 .env.*
 !.env.example

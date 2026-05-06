@@ -148,7 +148,7 @@ path_prepend() {
 }
 
 if command -v kubectl >/dev/null 2>&1; then
-    source <(kubectl completion bash)
+    source <(kubectl completion bash 2>/dev/null)
 fi
 
 # >>> conda initialize >>>
@@ -181,3 +181,29 @@ if [ -d "$PNPM_HOME" ]; then
     path_prepend "$PNPM_HOME"
 fi
 # pnpm end
+
+# Clash proxy (example: 127.0.0.1:7890)
+export HTTP_PROXY="http://127.0.0.1:7890"
+export HTTPS_PROXY="http://127.0.0.1:7890"
+export http_proxy="$HTTP_PROXY"
+export https_proxy="$HTTPS_PROXY"
+
+# Hosts/networks that should bypass the proxy
+export NO_PROXY="localhost,127.0.0.1,::1,192.168.0.0/16"
+export no_proxy="$NO_PROXY"
+
+# 为 uv 配置镜像源
+export UV_DEFAULT_INDEX="https://mirrors.tuna.tsinghua.edu.cn/pypi/web/simple"
+
+# 终端语言环境
+export LANG=zh_CN.UTF-8
+export LANGUAGE=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+
+# 本机私有配置不进入公开 dotfiles 仓库。
+for local_bash_config in "$HOME/.bash_secrets" "$HOME/.bash_local"; do
+    if [ -f "$local_bash_config" ]; then
+        . "$local_bash_config"
+    fi
+done
+unset local_bash_config

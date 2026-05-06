@@ -3,7 +3,36 @@
 set -euo pipefail
 
 DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-BACKUP_DIR="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+BACKUP_ROOT="$HOME/.dotfiles-backup"
+BACKUP_DIR="$BACKUP_ROOT/$(date +%Y%m%d-%H%M%S)"
+BACKUP_KEEP="${DOTFILES_BACKUP_KEEP:-3}"
+
+prune_backups() {
+    if [[ ! "$BACKUP_KEEP" =~ ^[0-9]+$ ]]; then
+        printf 'warning: DOTFILES_BACKUP_KEEP must be a non-negative integer, got %s\n' "$BACKUP_KEEP" >&2
+        return
+    fi
+
+    if [ "$BACKUP_KEEP" -eq 0 ] || [ ! -d "$BACKUP_ROOT" ]; then
+        return
+    fi
+
+    local -a backups=()
+    mapfile -t backups < <(find "$BACKUP_ROOT" -mindepth 1 -maxdepth 1 -type d -printf '%f\n' | sort)
+
+    local excess=$(( ${#backups[@]} - BACKUP_KEEP ))
+    if [ "$excess" -le 0 ]; then
+        return
+    fi
+
+    local backup_name
+    local i
+    for ((i = 0; i < excess; i++)); do
+        backup_name="${backups[$i]}"
+        rm -rf -- "$BACKUP_ROOT/$backup_name"
+        printf 'prune: %s/%s\n' "$BACKUP_ROOT" "$backup_name"
+    done
+}
 
 link_file() {
     local source_file="$1"
@@ -40,3 +69,5 @@ for dotfile in "${dotfiles[@]}"; do
 done
 
 link_file "$DOTFILES_DIR/vscode/settings.json" "$HOME/.config/Code/User/settings.json"
+
+prune_backups
