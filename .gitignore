@@ -1,17 +1,26 @@
-# 忽略所有的 .a 文件
-*.a
+# OS/editor noise
 .DS_Store
-# 但跟踪所有的 lib.a，即便你在前面忽略了 .a 文件
-!lib.a
+Thumbs.db
+*~
+*.swp
+*.swo
 
-# 只忽略当前目录下的 TODO 文件，而不忽略 subdir/TODO
-/TODO
+# Local/private overrides
+.env
+.env.*
+!.env.example
+*.local
+*.local.*
+secrets/
 
-# 忽略任何目录下名为 build 的文件夹
+# Private key material should not be committed to a public dotfiles repo.
+*.key
+*.pem
+id_rsa*
+id_ed25519*
+
+# Build/cache output
 build/
-
-# 忽略 doc/notes.txt，但不忽略 doc/server/arch.txt
-doc/*.txt
-
-# 忽略 doc/ 目录及其所有子目录下的 .pdf 文件
-doc/**/*.pdf
+.cache/
+tmp/
+*.log

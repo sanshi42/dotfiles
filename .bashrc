@@ -128,39 +128,56 @@ alias kk='kubectl'
 #PS1="\[\]\[\e]0;\u@\h: \w\a\]${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ \[\]"
 # 自定义的PS1
 PS1="\[\e[35;1m\][\u@\h \W]$>\[\e[0m\]"
-# 默认使用Pyhon3
+# 默认使用Python3
 alias python='python3'
-# 尝试设置Shell为Vim模式
+# 默认编辑器
 export EDITOR=vim
-# 添加miniconda的路径
-export PATH=$PATH:/home/huanglei/miniconda3/bin
-source <(kubectl completion bash)
-source /usr/share/bash-completion/bash_completion
+
+path_append() {
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$PATH:$1" ;;
+    esac
+}
+
+path_prepend() {
+    case ":$PATH:" in
+        *":$1:"*) ;;
+        *) PATH="$1:$PATH" ;;
+    esac
+}
+
+if command -v kubectl >/dev/null 2>&1; then
+    source <(kubectl completion bash)
+fi
 
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/huanglei/miniconda3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
-if [ $? -eq 0 ]; then
-    eval "$__conda_setup"
-else
-    if [ -f "/home/huanglei/miniconda3/etc/profile.d/conda.sh" ]; then
-        . "/home/huanglei/miniconda3/etc/profile.d/conda.sh"
+if [ -x "$HOME/miniconda3/bin/conda" ]; then
+    __conda_setup="$("$HOME/miniconda3/bin/conda" 'shell.bash' 'hook' 2> /dev/null)"
+    if [ $? -eq 0 ]; then
+        eval "$__conda_setup"
     else
-        export PATH="/home/huanglei/miniconda3/bin:$PATH"
+        if [ -f "$HOME/miniconda3/etc/profile.d/conda.sh" ]; then
+            . "$HOME/miniconda3/etc/profile.d/conda.sh"
+        else
+            path_prepend "$HOME/miniconda3/bin"
+        fi
     fi
+    unset __conda_setup
 fi
-unset __conda_setup
 # <<< conda initialize <<<
 
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env"
+fi
 
 # Created by `pipx` on 2025-01-10 08:25:53
-export PATH="$PATH:/home/huanglei/.local/bin"
+path_append "$HOME/.local/bin"
 
 # pnpm
-export PNPM_HOME="/home/huanglei/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
+export PNPM_HOME="$HOME/.local/share/pnpm"
+if [ -d "$PNPM_HOME" ]; then
+    path_prepend "$PNPM_HOME"
+fi
 # pnpm end

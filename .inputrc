@@ -1,1 +1,6 @@
-$include ~/.local/share/omakub/defaults/bash/inputrc
+# Readline 基础配置，保持自包含，避免依赖本机不存在的外部文件。
+set editing-mode vi
+set completion-ignore-case on
+set show-all-if-ambiguous on
+set colored-stats on
+set mark-symlinked-directories on

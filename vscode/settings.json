@@ -1,5 +1,5 @@
 {
-    // One Dark Pro 主题
+    // 亮色主题
     "workbench.colorTheme": "GitHub Light Default",
     // code（默认，基于物理键），KeyCode（基于键值），由于交换了 CapsLock 和 Esc 键，使用 KeyCode 更符合习惯
     "keyboard.dispatch": "keyCode",
@@ -14,7 +14,8 @@
     "editor.fontWeight": 550,
     "explorer.confirmDragAndDrop": false,
     "explorer.confirmDelete": false,
-    "clangd.path": "/home/huanglei/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/21.1.0/clangd_21.1.0/bin/clangd",
+    // 使用 PATH 中的 clangd，避免写死 VS Code 扩展内部版本路径
+    "clangd.path": "clangd",
     "C_Cpp.intelliSenseEngine": "disabled",
     "files.insertFinalNewline": true,
     "debug.onTaskErrors": "abort",
@@ -24,5 +25,5 @@
     "terminal.integrated.inheritEnv": false,
     "git.openRepositoryInParentFolders": "always",
     "markdown.preview.openMarkdownLinks": "inEditor",
-    "explorer.confirmPasteNative": false,
+    "explorer.confirmPasteNative": false
 }

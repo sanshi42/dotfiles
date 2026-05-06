@@ -1,4 +1,4 @@
-﻿" Comments in Vimscript start with a `"`.
+" Comments in Vimscript start with a `"`.
 
 " If you open this file in Vim, it'll be syntax highlighted for you.
 
@@ -123,8 +123,8 @@ autocmd BufReadPost *
 
 " 临时文件管理设置（此时如果多个人修改同一个文件时，将不会警告）
 " 如果文件夹不存在，则新建文件夹
-"if !isdirectory($HOME.'/.vim/files') && exists('*mkdir')
-"  call mkdir($HOME.'/.vim/files')
+"if !isdirectory(expand('~/.vim/files')) && exists('*mkdir')
+"  call mkdir(expand('~/.vim/files'), 'p')
 "endif
 
 " 备份文件
@@ -139,6 +139,9 @@ autocmd BufReadPost *
 " set undofile
 " set undodir     =$HOME/.vim/files/undo/
 " viminfo 文件
+if !isdirectory(expand('~/.vim/files/info')) && exists('*mkdir')
+  call mkdir(expand('~/.vim/files/info'), 'p')
+endif
 set viminfo     ='100,n$HOME/.vim/files/info/viminfo
 " 启用内置的matchit插件
 packadd! matchit
@@ -157,7 +160,7 @@ nnoremap ]<space>  :<c-u>put =repeat(nr2char(10), v:count1)<cr>
 " 快速编辑（更改拼写错误）自定义宏
 nnoremap <leader>m  :<c-u><c-r><c-r>='let @'. v:register .' = '. string(getreg(v:register))<cr><c-f><left>
 " 使用 sudo 权限保存文件
-cnoremap <slient> w!! w !sudo tee % > /dev/null
+cnoremap <silent> w!! w !sudo tee % > /dev/null
 " 使用 %% 自动扩展为活动缓存区所在目录的路径
 cnoremap <expr> %% getcmdtype() == ':' ? expand('%h').'/' : '%%'
 " 在GUI中快速改变字体大小
@@ -215,23 +218,32 @@ function! s:VSetSearch(cmdtype)
 endfunction
 
 " 自动化下载 plug.vim
-let data_dir = has('nvim') ? stdpath('data') . '/site' : '~/.vim'
-if empty(glob(data_dir . '/autoload/plug.vim'))
-      silent execute '!curl -fLo '.data_dir.'/autoload/plug.vim --create-dirs  https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
-        autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+let data_dir = has('nvim') ? stdpath('data') . '/site' : expand('~/.vim')
+let plug_path = data_dir . '/autoload/plug.vim'
+if empty(glob(plug_path))
+  if executable('curl')
+    silent execute '!curl -fLo ' . shellescape(plug_path) . ' --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+  else
+    echohl WarningMsg
+    echom 'vim-plug not found and curl is unavailable; skipping plugin setup'
+    echohl None
+  endif
 endif
 
 " ###### 以下的配置来自于 ChatGPT 生成，请注意是否正确
 " vim-plug 初始化
-call plug#begin('~/.vim/plugged')
+if exists('*plug#begin')
+  call plug#begin('~/.vim/plugged')
 
-" 基础插件（暂时还不了解这些工具怎么使用，所以先全部注释掉
-" Plug 'scrooloose/nerdtree'   " 文件浏览器
-" Plug 'tpope/vim-fugitive'    " Git 集成
-" Plug 'airblade/vim-gitgutter' " Git 差异显示
-" Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-" Plug 'junegunn/fzf.vim'      " 模糊查找
-Plug 'michaeljsmith/vim-indent-object'
+  " 基础插件（暂时还不了解这些工具怎么使用，所以先全部注释掉
+  " Plug 'scrooloose/nerdtree'   " 文件浏览器
+  " Plug 'tpope/vim-fugitive'    " Git 集成
+  " Plug 'airblade/vim-gitgutter' " Git 差异显示
+  " Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+  " Plug 'junegunn/fzf.vim'      " 模糊查找
+  Plug 'michaeljsmith/vim-indent-object'
 
-" 结束插件块
-call plug#end()
+  " 结束插件块
+  call plug#end()
+endif
