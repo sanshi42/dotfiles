@@ -1,7 +1,28 @@
 {
-    // 使用绝对行号以方便使用vim插件
-    "editor.lineNumbers": "relative",
-    "python.defaultInterpreterPath": "/bin/python3",
-    "editor.fontSize": 18,
-    "workbench.colorTheme": "Default Light Modern"
+    // One Dark Pro 主题
+    "workbench.colorTheme": "GitHub Light Default",
+    // code（默认，基于物理键），KeyCode（基于键值），由于交换了 CapsLock 和 Esc 键，使用 KeyCode 更符合习惯
+    "keyboard.dispatch": "keyCode",
+    // 编辑停止 1000ms 后自动保存
+    "files.autoSave": "afterDelay",
+    "files.autoSaveDelay": 1000,
+    // 字体大小
+    "editor.fontSize": 14,
+    // 资源管理器的字体大小设置
+    "window.zoomLevel": 1.5,
+    // 字体加粗
+    "editor.fontWeight": 550,
+    "explorer.confirmDragAndDrop": false,
+    "explorer.confirmDelete": false,
+    "clangd.path": "/home/huanglei/.config/Code/User/globalStorage/llvm-vs-code-extensions.vscode-clangd/install/21.1.0/clangd_21.1.0/bin/clangd",
+    "C_Cpp.intelliSenseEngine": "disabled",
+    "files.insertFinalNewline": true,
+    "debug.onTaskErrors": "abort",
+    "chatgpt.composerEnterBehavior": "cmdIfMultiline",
+    "chat.viewSessions.orientation": "stacked",
+    "chatgpt.followUpQueueMode": "queue",
+    "terminal.integrated.inheritEnv": false,
+    "git.openRepositoryInParentFolders": "always",
+    "markdown.preview.openMarkdownLinks": "inEditor",
+    "explorer.confirmPasteNative": false,
 }
